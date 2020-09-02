@@ -60,7 +60,7 @@ model = tf.keras.models.load_model(wd)
 
 tfrecords = [os.path.join(wd, '00000_00256.tfrecord')]
 
-test_audio = get_test_dataset(tfrecords, batch_size)
+test_audio = get_test_dataset(tfrecords, batch_size=batch_size)
 
-print(model.evaluate(test_audio, batch_size))
+print(model.evaluate(test_audio, batch_size=batch_size))
 
