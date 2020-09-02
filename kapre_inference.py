@@ -53,67 +53,13 @@ def get_test_dataset(tfrecords,
 
     return dataset
 
-# # Load the TFLite model and allocate tensors.
-# interpreter = tf.lite.Interpreter(model_path="/Users/Ollie/Downloads/kapre_training/keras_output_2/model.tflite")
-# interpreter.allocate_tensors()
-
-# # Get input and output tensors.
-# input_details = interpreter.get_input_details()
-# output_details = interpreter.get_output_details()
-
-# sound, _ = sf.read('/Users/Ollie/Downloads/021A-C0897X0085XX-AAZZP0.wav')
-# for i in range(len(sound // 1024)):
-#     audio = sound[i * 1024: (i+1) * 1024]
-#     audio = tf.convert_to_tensor(audio, dtype='float32')
-#     audio = tf.expand_dims(audio, axis=0)
-#     audio = tf.expand_dims(audio, axis=0)
-#     interpreter.set_tensor(0, audio)
-
-#     interpreter.invoke()
-#     output_data = interpreter.get_tensor(output_details[0]['index'])
-#     print(output_data)
-
-# audio = tf.convert_to_tensor(audio[10240:11264], dtype='float32')
-# audio = tf.expand_dims(audio, axis=0)
-# audio = tf.expand_dims(audio, axis=0)
-
-# audio = np.array([0]*1024, dtype='float32')
-# audio = tf.expand_dims(audio, axis=0)
-# audio = tf.expand_dims(audio, axis=0)
-
-# print(audio)
-
-# interpreter.set_tensor(0, audio)
-
-# interpreter.invoke()
-# output_data = interpreter.get_tensor(output_details[0]['index'])
-# print(output_data)
-
-
-# ------------------------------------------
-model_dir = '/Users/Ollie/Downloads/kapre_training/keras_output_2'
+model_dir = './'
 
 model = tf.keras.models.load_model(model_dir)
 
-tfrecords_train = glob.glob('{}train/*.tfrecord'.format('/Users/Ollie/Downloads/LibriSpeech/tfrecords/'))
+tfrecords = ['./00000_00256.tfrecord']
 
-# sound, _ = sf.read('/Users/Ollie/Downloads/021A-C0897X0085XX-AAZZP0.wav')
-# for i in range(len(sound // 1024)):
-#     audio = sound[i * 1024: (i+1) * 1024]
-#     # audio = np.array([0.] * 1024)
-#     audio = tf.expand_dims(audio, axis=0)
-#     audio = tf.expand_dims(audio, axis=0)
-#     print(audio.shape)
+test_audio = get_test_dataset(tfrecords_train, batch_size)
 
-#     print(model.predict(audio, batch_size=1))
-
-test_audio = get_test_dataset(tfrecords_train, batch_size=32)
-
-# for i in test_audio:
-#     x = i[0][0]
-# x = tf.expand_dims(x, axis=1)
-
-# print(model.predict(x))
-
-print(model.evaluate(test_audio, batch_size=32))
+print(model.evaluate(test_audio, batch_size))
 
